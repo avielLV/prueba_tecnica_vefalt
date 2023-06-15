@@ -51,6 +51,7 @@ class BarBotton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MapController controller = ref.watch(mapControllerProvider);
+    final mostar = ref.watch(mostrarCard);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Row(
@@ -81,17 +82,30 @@ class BarBotton extends ConsumerWidget {
               ),
             ),
           ),
-          Container(
-            width: 125,
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
-            decoration: const BoxDecoration(
-                color: Color(0xFFB6E13D),
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-            child: SvgPicture.asset(
-              '$carpIcon/bar_botton_location.svg',
-              width: 21,
-              height: 21,
+          InkWell(
+            onTap: () {
+              ref.read(mostrarCard.notifier).update((state) => !state);
+            },
+            child: Container(
+              width: 125,
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+              decoration: BoxDecoration(
+                  color: mostar
+                      ? const Color(0xFF333333)
+                      : const Color(0xFFB6E13D),
+                  borderRadius: const BorderRadius.all(Radius.circular(8))),
+              child: mostar
+                  ? SvgPicture.asset(
+                      '$carpIcon/bar_botton_cerrar.svg',
+                      width: 21,
+                      height: 21,
+                    )
+                  : SvgPicture.asset(
+                      '$carpIcon/bar_botton_location.svg',
+                      width: 21,
+                      height: 21,
+                    ),
             ),
           ),
         ],

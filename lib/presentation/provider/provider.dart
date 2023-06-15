@@ -11,3 +11,5 @@ final pointSelectProvider = StateProvider<int>((ref) {
 });
 
 final mapControllerProvider = StateProvider((ref) => MapController());
+
+final mostrarCard = StateProvider((ref) => false);

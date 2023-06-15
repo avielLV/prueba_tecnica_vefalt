@@ -9,6 +9,7 @@ import 'package:prueba_tecnica_veflat/presentation/widgets/card_site.dart';
 import '../../core/constant.dart';
 import '../provider/provider.dart';
 import '../widgets/bar_botton.dart';
+import '../widgets/card_seguimiento.dart';
 import '../widgets/map_flutter_background.dart';
 import '../widgets/search.dart';
 
@@ -22,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
       '$carpImagen/image2.png',
       '$carpImagen/image3.png',
     ];
-
+    final mostar = ref.watch(mostrarCard);
     return Scaffold(
         body: Stack(
       children: [
@@ -38,28 +39,30 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 Column(
                   children: [
-                    SizedBox(
-                      height: 86,
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.symmetric(vertical: 2),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: titulos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              ref
-                                  .read(pointSelectProvider.notifier)
-                                  .update((state) => index + 1);
-                            },
-                            child: CardSite(
-                              imagen: images[index],
-                              titulo: titulos[index],
+                    mostar
+                        ? const CardSeguimiento()
+                        : SizedBox(
+                            height: 86,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: titulos.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () {
+                                    ref
+                                        .read(pointSelectProvider.notifier)
+                                        .update((state) => index + 1);
+                                  },
+                                  child: CardSite(
+                                    imagen: images[index],
+                                    titulo: titulos[index],
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                          ),
                     const SizedBox(height: 26),
                     const BarBotton(),
                   ],
